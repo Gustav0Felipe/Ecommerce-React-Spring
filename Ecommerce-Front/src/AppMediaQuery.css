@@ -1,0 +1,79 @@
+@charset "UTF-8";
+/* 
+Typical device breakpoints, medidas do w3c de 1 ano atrás: 
+--------------------------------------------------
+Pequenas telas - até 600px
+Celular - de 600px até 768px
+Tablet - de 769px até 992px
+Desktop - 993px até 1200px (ainda  seria pouco)
+Grandes telas - acima de 1200px (como televisões.
+*/
+@media screen and (min-width: 769px){ /*A partir de tablet.*/
+	header{
+	background-color: rgb(255, 165, 43);
+	width: 100vw;	
+	padding: 10px;
+	}
+    #burguer{
+        display: none;
+    }
+    nav{
+		display: block;
+		width: 100%;	
+	}
+    nav > ul >  li{
+        display: inline-block;
+    }
+	nav > ul > li > a{
+	display: block;
+	text-decoration: none;
+	background-color: rgb(255, 165, 43);
+	color: rgb(255, 255, 255);
+	margin-right: 20px;
+	padding: 2px;
+	}    
+	
+	#section-principal > h1{
+	font-size: 2em;
+	text-align: center;
+	}
+	.produtos{
+		display: grid;
+		grid-template-columns: 1fr 1fr 1fr 1fr;
+	}
+	.produto{
+		display: flex;
+		flex-direction: row;
+	}
+	.produto > a >img{
+		display: inline-block;
+		width: 22.5vw;
+	}
+	
+	div#detalhes{
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+		margin: 30px auto 0px auto;
+		width: 90%;
+		max-width: 900px;
+	
+		border: 1px solid rgb(3, 3, 3, 0.50);
+		border-radius: 5px;
+	}
+	
+	div#detalhes > img {
+		width: 200px;
+	}
+	
+	ol#descricao_bar{
+		width: 90%;
+		max-width: 900px;
+	}
+	
+	div#descricao{
+	width: 90%;
+	max-width: 900px;
+	min-height: 200px;
+	}
+}

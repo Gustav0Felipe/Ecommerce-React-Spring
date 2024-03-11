@@ -1,0 +1,13 @@
+// O main.tsx Declara a criação da conexão do react com HTML, vai no html pega uma div com o id root e injeta e renderiza nosso aplicativo js lá dentro.
+// o componente app é normalmente usado para colocar o router com todas as rotas da aplicação.
+
+
+<ol class="produtos">
+    <c:forEach var="p" items="${produtos}">
+        <li class="produto">
+            <a href='/loja/comprar?produto=${p}'>
+            <img class="ofertas" src="imagens/${p}.png"/>	
+            </a>
+        </li>
+    </c:forEach>	
+</ol> */
