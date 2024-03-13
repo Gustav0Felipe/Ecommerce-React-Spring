@@ -1,6 +1,7 @@
 import { Component } from 'react';
 import JavaIcon from '../../assets/favicon.ico'
 import Menu from './menu';
+import { Link } from 'react-router-dom';
 
 
 
@@ -10,7 +11,7 @@ class Header extends Component<any, any>{
 	
 		return(
 			<header>
-			<a href="/loja/"><img alt="Icone do Java" src={JavaIcon} id="logo"/></a>
+			<Link to="/loja/"><img alt="Icone do Java" src={JavaIcon} id="logo"/></Link>
 			<div id="pesquisar">
 				<form action="/loja/pesquisar" method="get">
 					<input type="text" id="pesquisa" name="pesquisa" placeholder="Pesquisar"/>

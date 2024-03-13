@@ -77,11 +77,13 @@ export const CartProvider = ({ children } : any) => {
       Cliente: user.cod_cli,
       Produtos: items
     }
+    if(pedido != null){
     const fetchData = async () => {
       axios.post(API_URL + "/loja/cart/subir-pedido", pedido) //segundo parametro seriam headers
       setCartItems([]);
       }
     fetchData();
+    }
   }
 
   useEffect(() => {

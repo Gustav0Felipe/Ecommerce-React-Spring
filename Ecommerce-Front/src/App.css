@@ -17,10 +17,9 @@
 	padding: 0px;
 	font-family: Helvetica, Arial, sans-serif;
 	box-sizing: border-box;
-	
 }
 
-body, html, .container{
+body, html, #root{
 	width: 100vw;
 	height: 100vh;
 }
@@ -107,17 +106,19 @@ nav > ul > li:last-child > a{
 }
 .produto{
 	display: flex;
-	flex-direction: row;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	margin-bottom: 20px;
 }
-.produto > img{
+.produto > a > img{
 	display: inline-block;
-	width: 40vw;
+	width: 20vw;
 }
 
 footer{
 	position: fixed;
 	bottom: 0;	
-	
 	width: 100vw;
 	text-align: center;
 
@@ -159,7 +160,7 @@ p#preco{
 	color: var(--cor--verde--0);
 }
 
-button#comprar{
+a#comprar{
 	width: 100%;
 	margin: auto;
 	padding: 7px;
@@ -172,7 +173,7 @@ button#comprar{
 	font-size: 2em;
 }
 
-button#comprar:active{
+a#comprar:active{
 	background-color: var(--cor--verde--1);
 }
 
@@ -261,6 +262,7 @@ ol#carrinho_list {
 	display: grid;
 	grid-template-columns: 1fr 1fr;
 	margin-bottom: 10px;
+	list-style: none;
 }
 
 ol#carrinho_list > div > li {
@@ -268,30 +270,30 @@ ol#carrinho_list > div > li {
 	flex-direction: column;
 	align-content: space-around;
 }
-ol#carrinho_list > div > li > p > button {
-	display: inline-block;
+ol#carrinho_list > li > p > button {
 	width: 20px;
-	border-radius: 2px;
-	border: 1px solid  black;
+	height: 40px;
+	margin-right: 5px;
+	margin-left: 5px;
 }
-ol#carrinho_list > div > li > p > button > span{
-	font-size: 1em;
+ol#carrinho_list > li > p > button > span{
+	font-size: 1.2em;
+	margin-left: -4px;
 }
+
 .miniatura_produto {
 	
 	width: 70px;
 }
 #limpar_carrinho{
 	display: flex;
-	width: 150px;
-	margin-left: auto;
+	width: 80px;
 	padding: 3px;
+	margin-top: 5px;
 	
 	justify-content: space-between;
 	
 	background-color: white;
-	border: 1px solid  rgb(133, 133, 133);
-	border-radius: 2px;
 }
 input#cep{
 	padding: 6px;

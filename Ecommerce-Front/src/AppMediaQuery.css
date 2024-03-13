@@ -36,18 +36,21 @@ Grandes telas - acima de 1200px (como televisões.
 	#section-principal > h1{
 	font-size: 2em;
 	text-align: center;
+	padding: 5px;
 	}
 	.produtos{
 		display: grid;
-		grid-template-columns: 1fr 1fr 1fr 1fr;
+		grid-template-columns: 1fr 1fr 1fr ;
+		padding: 20px;
 	}
 	.produto{
 		display: flex;
-		flex-direction: row;
+		flex-direction: column;
+	
 	}
-	.produto > a >img{
+	.produto > a > img{
 		display: inline-block;
-		width: 22.5vw;
+		width: 15vw;
 	}
 	
 	div#detalhes{

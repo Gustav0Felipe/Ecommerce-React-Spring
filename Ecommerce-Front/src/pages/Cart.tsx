@@ -11,8 +11,8 @@ export default function Cart () {
     <>    
     <Header></Header>
     <section>    
-      <h1><span className="material-symbols-outlined">shopping_cart</span> MEU CARRINHO</h1>
     <div id="resumo">
+      <h1><span className="material-symbols-outlined">shopping_cart</span> MEU CARRINHO</h1>
       <h2>Resumo</h2>
       {
           cartItems.length > 0 ? (
@@ -25,45 +25,36 @@ export default function Cart () {
           <h3>Produto</h3>
           <ol id="carrinho_list">
           {cartItems.map((item : any) => (
-            <div key={item.id}>
-              <li>
-              <img className="miniatura_produto" src="imagens/${produto.getId()}.png" alt={item.nome_prod}/>
-              
+            <li key={item.id_prod}>
+              <p className="prod_name">{item.nome_prod}</p>
+              <img className="miniatura_produto" src={item.image} alt={item.nome_prod}/>
               <p>
               <button
                   onClick={() => {
                     addToCart(item)
                   }}
                 >
-                  +
+                <span>+</span>
                 </button>
                 {item.quantity}
-                <button
+                <button 
                   onClick={() => {
                     removeFromCart(item)
                   }}
                 >
-                  -
+                <span>-</span>
                 </button>
                 <button type="button" onClick={() => {deleteFromCart(item)}}><span className="material-symbols-outlined">delete</span></button>
               </p>
-              
-             
             </li>
-
-            <li>
-            <p className="prod_name">{item.nome_prod}</p>
-            </li>
-            </div>
-              
           ))}  
           </ol>
-        </div>
-        {
-          <button onClick={() => {clearCart()}}>
+          <button id="limpar_carrinho" onClick={() => {clearCart()}}>
             Clear cart
           </button>
-        }
+        </div>
+        
+        
       </div>
 
       <div id="finalizarDiv">
