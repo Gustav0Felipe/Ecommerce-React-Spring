@@ -3,7 +3,7 @@ import Header from "../components/header/header";
 import axios from "axios";
 import { useForm } from "react-hook-form";
 import { Navigate } from "react-router-dom";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { UserContext } from "../context/userContext";
 
 const API_URL = 'http://localhost:8080';
@@ -12,9 +12,14 @@ export function Login(){
     
     const { user, userLogin } = useContext(UserContext);
     const { register, handleSubmit } = useForm();
+    const [redirectAdminPage, setRedirectAdminPage] = useState(false);
 
     const loginValidate = async (formValues : any) => {  
             const response = await axios.post(API_URL + "/loja/login", formValues) //segundo parametro seriam headers
+            if((response.data.role).toUpperCase() == "ADMIN"  ){
+                window.sessionStorage.setItem("isAdmin", "true");
+                setRedirectAdminPage (true);
+            }
             if(response.data.length == 0){
                 alert("Email ou senha Inválidos.");
             } else{
@@ -24,7 +29,8 @@ export function Login(){
 
     return (
         <>
-        {user.cod_cli && <Navigate to="/loja/perfil" replace={true} />}
+        {user.id_cliente &&  !redirectAdminPage && <Navigate to="/loja/perfil" replace={true}/> }
+        {redirectAdminPage && <Navigate to="/loja/admin" replace={true} />}
         <Header></Header>
         <section id="section-principal">
             <div className="login">

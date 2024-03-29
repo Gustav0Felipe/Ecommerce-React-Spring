@@ -50,6 +50,10 @@ class Menu extends Component<any, any>{
 							<span id="cart" className="material-symbols-outlined">shopping_cart</span> 
 						</Link>
 					</li>
+					{
+					window.sessionStorage.getItem("isAdmin") == "true" && 
+					<li><Link to="/loja/admin">Admin</Link></li> 
+					}
 				</ul>
 			</nav>
         </>

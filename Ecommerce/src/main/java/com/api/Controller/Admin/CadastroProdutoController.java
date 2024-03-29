@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.api.InputDto.ProdutoDto;
 import com.api.Service.AdminService;
+import com.api.dto.InputDto.ProdutoDto;
 
 @RequestMapping("/admin")
 @RestController
@@ -17,14 +17,16 @@ public class CadastroProdutoController {
 	
 	@Autowired
 	AdminService adminService;
-	
+
 	
 	@CrossOrigin(origins="*", allowedHeaders="*")
 	@PostMapping("/cadastrar-produto")
 	public HttpStatus cadastrarProduto(@RequestBody ProdutoDto produto) {
+		System.out.println("Chegou no cadastro de produto.");
 		adminService.cadastrarProduto(produto);
 		
 		return HttpStatus.OK;
 	}
+	
 	
 }

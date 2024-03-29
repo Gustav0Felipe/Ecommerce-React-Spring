@@ -1,21 +1,19 @@
 package com.api.Util;
 
-import java.util.Random;
+import java.security.SecureRandom;
 
 public class Utilitarios {
-	public static String gerarStringAlphanumerica() {
+	
+	private static final String CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+	
+	public static String gerarStringAlphanumerica(int length) {
 
-		int leftLimit = 48; // numero '0'
-	    int rightLimit = 122; // letra 'z'
-	    int targetStringLength = 20;
-	    Random random = new Random();
-
-	    String generatedString = random.ints(leftLimit, rightLimit + 1)
-	      .filter(i -> (i <= 57 || i >= 65) && (i <= 90 || i >= 97))
-	      .limit(targetStringLength)
-	      .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
-	      .toString();
-
-	    return generatedString;
+		SecureRandom secureRandom = new SecureRandom();
+		StringBuilder sb = new StringBuilder();
+		for(int i = 0; i < length; i++) {
+			int index = secureRandom.nextInt(CHARACTERS.length());
+			sb.append(CHARACTERS.charAt(index));
+		}
+	    return sb.toString();
 	}
 }

@@ -1,28 +1,33 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Footer } from "../components/footer/footer";
 import Header from "../components/header/header"
 import { ProductData } from "../interface/ProductData";
 import { Link, useParams } from "react-router-dom";
 import { CartContext } from "../context/cartContext";
-import { useProductData } from "../hooks/useProductData";
+import axios, { AxiosPromise } from "axios";
+
+const API_URL = 'http://localhost:8080';
 
 function Compra(){
-    const { data } = useProductData(); 
     var { id } = useParams();
 
     const [openDesc, setOpenDesc] = useState(false);
+    const [ produto, setProduto ] = useState<any>(null);
     const { addToCart } = useContext(CartContext);
 
     const handleOpenDesc = () =>{
         setOpenDesc(prev => !prev);
     }
 
-    var produto : ProductData | null = null;
-    if(data != undefined && id != undefined){
-        var itemIndex = Number.parseInt(id) - 1;
-        produto = data[itemIndex];
-    }
-    console.log(produto);
+    useEffect(() => {
+        const fetchData = async () : AxiosPromise<ProductData> => {
+            const response = await axios.get(API_URL + "/loja/produto?id=" + id)
+            setProduto(response.data);
+            return response;
+        }
+        fetchData();
+      }, []);
+   
     return(
         <>
     <Header></Header>

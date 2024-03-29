@@ -16,10 +16,10 @@ export function Perfil(){
 		console.log(response);
 		alert("Conta Excluida com Sucesso!, seus dados foram apagados.")
 	}
-
+	console.log(user)
     return(
     <>
-	{!user.cod_cli && <Navigate to="/loja/login"></Navigate>}
+	{!user.id_cliente && <Navigate to="/loja/login"></Navigate>}
 	
     <Header></Header>
         <section id="section-principal">
@@ -29,13 +29,13 @@ export function Perfil(){
 			<h2>Informações de Acesso</h2>
 			<ol>
 				<li className="perfilDados">Nome:</li>
-				<li>{user.nome_cli}</li>
+				<li>{user.nome}</li>
 				<li className="perfilDados">Email:</li>
-				<li>{user.email_cli}</li>
+				<li>{user.email}</li>
 				<li className="perfilDados">Telefone:</li>
-				<li>{user.tel_cli}</li>
+				<li>{user.telefone}</li>
 				<li className="perfilDados">Cpf:</li>
-				<li>{user.cpf_cli}</li>
+				<li>{user.cpf}</li>
 			</ol>
 			<br/> 
 			<Link to="/loja/perfil/editar"><button className="editButtons">EDITAR</button></Link> 

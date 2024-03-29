@@ -1,12 +1,13 @@
 package com.api.Service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.api.EmailSender.EmailSender;
-import com.api.InputDto.ClienteDto;
-import com.api.InputDto.LoginDto;
 import com.api.Util.Utilitarios;
+import com.api.dto.InputDto.AtualizarClienteDto;
+import com.api.dto.InputDto.AtualizarClienteSenhaDto;
+import com.api.dto.OutputDto.DadosClienteDto;
 import com.domain.model.Cliente;
 import com.domain.repository.ClienteRepository;
 
@@ -17,44 +18,82 @@ public class ClienteService {
 	public ClienteRepository clienteRepository;
 	
 	@Autowired
-	EmailSender emailSender;
-
-	public Cliente login(LoginDto credenciais) {
-		return clienteRepository.pd_user_cliente(credenciais.email(), credenciais.senha());
-	}
+	private PasswordEncoder passwordEncoder;
 	
+	@Autowired
+	MailService mailService;
+
 	public Boolean clienteJaCadastrado(String email, String cpf) {
 		return clienteRepository.pd_user_cliente_alreadyExists(email, cpf);
 	}
-	
-	
-	public Cliente cadastrarCliente(ClienteDto cadastro) {
-		int idCliente = clienteRepository.pd_cadastro_cliente(cadastro.nome(), cadastro.telefone(), cadastro.email(), cadastro.cpf());
-		clienteRepository.pd_cadastro_cliente_sistema(idCliente, cadastro.email(), cadastro.senha());
+
+	public DadosClienteDto cadastrarCliente(Cliente cliente) {
 		
-		Cliente cliente = clienteRepository.pd_user_cliente(cadastro.email(), cadastro.senha());
-		return cliente;
+		Boolean clientExist = clienteJaCadastrado(cliente.getEmail(), cliente.getCpf());
+		if(clientExist){
+			throw new RuntimeException("Esse email já existe.");
+		} else {
+			String encodedPassword = passwordEncoder.encode(cliente.getPassword());
+			cliente.setPassword(encodedPassword);
+			
+			String randomCode = Utilitarios.gerarStringAlphanumerica(64);
+			
+			cliente.setVerificationCode(randomCode);
+			cliente.setEnabled(false);
+			cliente.setRole("USER");
+			Cliente clienteSalvo = clienteRepository.save(cliente);
+			
+			DadosClienteDto saidaCliente = new DadosClienteDto(
+					cliente.getCod_cli(),
+					cliente.getNome(),
+					cliente.getEmail(),
+					cliente.getPassword(),
+					cliente.getTelefone(),
+					cliente.getCpf(),
+					null,
+					cliente.getRole()
+					);
+			
+			mailService.sendVerificationEmail(clienteSalvo);
+			
+			return saidaCliente;
+		}
 	}
 	
-	public Cliente atualizarCliente(ClienteDto cliente) {
-		return clienteRepository.pd_atualiza_cliente(Integer.parseInt(cliente.idCliente()), cliente.nome(), cliente.telefone());
+	public boolean verify(String code) {
+		Cliente cliente = clienteRepository.findByVerificationCode(code);
+		
+		if(cliente == null || cliente.isEnabled()) {
+			return false;
+		} else {
+			cliente.setVerificationCode(null);
+			cliente.setEnabled(true);
+			clienteRepository.save(cliente);
+			
+			return true;
+		}
 	}
 	
-	public String notificarCliente(LoginDto cliente) {
-		Boolean senhaCorresponde = clienteRepository.pd_autorizar_alterar_senha(Integer.parseInt(cliente.idCliente()), cliente.senha());
-		if(senhaCorresponde) {
-			String token = Utilitarios.gerarStringAlphanumerica();
-			emailSender.sendEmail(token, cliente.email());
+	
+	public Cliente atualizarCliente(AtualizarClienteDto cliente) {
+		return clienteRepository.pd_atualiza_cliente(Integer.parseInt(cliente.id()), cliente.nome(), cliente.telefone());
+	}
+	
+	public String notificarCliente(AtualizarClienteSenhaDto cliente) {
+		String senhaDatabase = clienteRepository.pd_autorizar_alterar_senha(Integer.parseInt(cliente.id()), cliente.senha());
+		if(passwordEncoder.matches(cliente.senha(), senhaDatabase)) {
+			String token = Utilitarios.gerarStringAlphanumerica(64);
+			mailService.sendPassChangeEmail(token, cliente);
 			return token;
 		}else {
 			return null;
 		}
 	}
 
-
-	public Cliente atualizarSenhaCliente(LoginDto dadosCliente) {
+	public Cliente atualizarSenhaCliente(AtualizarClienteSenhaDto dadosCliente) {
 		try{
-			return clienteRepository.pd_atualiza_senha_cliente(Integer.parseInt(dadosCliente.idCliente()), dadosCliente.senha());
+			String encodedPassword = passwordEncoder.encode(dadosCliente.senha());
+			return clienteRepository.pd_atualiza_senha_cliente(Integer.parseInt(dadosCliente.id()), encodedPassword);
 		}catch(Exception e) {
 			return null;
 		}

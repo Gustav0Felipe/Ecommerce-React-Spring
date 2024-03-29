@@ -12,7 +12,7 @@ export const UserProvider = ({ children } : any) => {
     }
 
     const [user, setUser] = useState<any>(localStorage.getItem('userPerfil') ? JSON.parse(check) : [])
-
+    
     const userLogin = (user : any) => {
         setUser(user);
         localStorage.setItem("userPerfil", JSON.stringify(user));

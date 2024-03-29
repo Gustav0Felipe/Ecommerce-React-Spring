@@ -5,7 +5,7 @@ import { Footer } from "../../components/footer/footer";
 export function AdminMenu(){
     return(
     <>
-    {window.sessionStorage.getItem("isAdmin") != "true" && <Navigate to="/loja/login-admin"></Navigate> }
+    {window.sessionStorage.getItem("isAdmin") != "true" && <Navigate to="/loja/login"></Navigate> }
     <Header></Header>
     <section id="section-principal-admin">
 	<h1>Menu de gerenciamento</h1>

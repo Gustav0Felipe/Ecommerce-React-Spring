@@ -40,7 +40,7 @@ export function Cadastro(){
 				<label htmlFor="email">Email: </label> 
 				<input id="email" {...register("email")} type="email" maxLength={255} required placeholder="Email *"/> 
 				<label htmlFor="senha">Senha: </label> 
-				<input id="senha" {...register("senha")} type="password" minLength={8} required placeholder="Senha *"/>
+				<input id="senha" {...register("senha")} type="password" minLength={8} required placeholder="Senha *" autoComplete="on"/>
 				<button id="cadastrar" type="submit">Enviar</button>
 			</form>
 			{invalido && <p className="mensagem"> Cliente já cadastrado.</p>}

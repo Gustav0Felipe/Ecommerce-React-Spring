@@ -2,10 +2,11 @@ import { useContext } from 'react'
 import { CartContext } from '../context/cartContext'
 import { Footer } from '../components/footer/footer'
 import Header from '../components/header/header'
+import { Link } from 'react-router-dom'
 
 export default function Cart () {
 
-  const { cartItems, addToCart, removeFromCart, deleteFromCart, clearCart, getCartTotal, updateOrder } = useContext(CartContext)
+  const { cartItems, addToCart, removeFromCart, deleteFromCart, clearCart, getCartTotal } = useContext(CartContext)
 
   return (
     <>    
@@ -58,7 +59,7 @@ export default function Cart () {
       </div>
 
       <div id="finalizarDiv">
-        <button onClick={() => {updateOrder()}} id="finalizar" type="button"><span className='material-symbols-outlined'>shopping_cart</span> FINALIZAR PEDIDO</button>
+        <Link to="/loja/cart/payment"><span className='material-symbols-outlined'>shopping_cart</span> FINALIZAR PEDIDO</Link>
       </div>
       </section>
       <Footer></Footer>

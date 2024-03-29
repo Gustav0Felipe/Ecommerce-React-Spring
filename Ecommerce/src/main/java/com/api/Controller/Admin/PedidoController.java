@@ -3,6 +3,7 @@ package com.api.Controller.Admin;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,6 +23,7 @@ public class PedidoController {
 	@Autowired
 	AdminService adminService;
 	
+	@CrossOrigin(allowedHeaders = "*", origins = "*" )
 	@Transactional
 	@GetMapping("/listar/pedidos")
 	public List<Pedido> listarPedidos(){
@@ -29,6 +31,7 @@ public class PedidoController {
 		return pedidos;
 	}
 	
+	@CrossOrigin(allowedHeaders = "*", origins = "*" )
 	@Transactional
 	@GetMapping("/listar/pedido")
 	public List<PedidoProduto> detalharPedido(@RequestParam int pedido) {
@@ -38,8 +41,9 @@ public class PedidoController {
 	
 	@CrossOrigin(allowedHeaders = "*", origins = "*" )
 	@PutMapping("/listar/pedido")
-	public void finalizarPedido(@RequestParam int pedido){
+	public ResponseEntity<String> finalizarPedido(@RequestParam int pedido){
 		adminService.finalizarPedido(pedido);
+		return ResponseEntity.ok("Sucesso.");
 	}
 	
 }

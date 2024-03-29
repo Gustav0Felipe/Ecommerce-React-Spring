@@ -12,13 +12,17 @@ export function EditarPerfil(){
     const { user, userLogin } = useContext(UserContext);
 	const { register, handleSubmit } = useForm(); 
 	const updateUserData =  async (formValues : any) => {   
-        console.log(formValues);
-       
-            const response = await axios.put(API_URL + "/loja/perfil/editar", formValues);
+            const response = await axios.put(API_URL + "/loja/perfil/editar", formValues, {
+				headers: {
+				  'Authorization': user.token
+				}
+			  });
             console.log(response);
 			
-			userLogin(response.data)
-
+			//TESTAR ISSO AQUI, TALVEZ GUARDAREI TOKEN NO CONTEXTO? 
+			//PROVAVELMENTE IREI GERAR UM NOVO TOKEN NO CONTROLLER E PEGAR NO RESPONSE AQUI.
+			userLogin(response.data); 
+			  console.log(user)
             return response;
     }
    
@@ -31,18 +35,19 @@ export function EditarPerfil(){
 			<h1>Alterar meus dados</h1>
 			<p>É possivel alterar apenas Nome e Telefone.</p>
 			<form name="formEditar" onSubmit={handleSubmit(updateUserData)}>
-					<input id="idCliente" {...register("idCliente")} type="hidden" required  value={user.cod_cli}/>
+					<input id="token" {...register("token")} type="hidden" required  value={user.token}/>
+					<input id="idCliente" {...register("id")} type="hidden" required  value={user.id_cliente}/>
 					<label htmlFor="nome">Nome: </label>
-					<input id="nome" {...register("nome")} type="text" maxLength={255} required placeholder="Nome" defaultValue={user.nome_cli}/>
+					<input id="nome" {...register("nome")} type="text" maxLength={255} required placeholder="Nome" defaultValue={user.nome}/>
 					
 					<label htmlFor="cpf">CPF: </label>
-					<input id="cpf" {...register("cpf")} type="text" maxLength={255} required placeholder="CPF *" value={user.cpf_cli} readOnly={true}/>
+					<input id="cpf" {...register("cpf")} type="text" maxLength={255} required placeholder="CPF *" value={user.cpf} readOnly={true}/>
 					
 					<label htmlFor="telefone">Telefone: </label>
-					<input id="telefone" {...register("telefone")} type="tel" required placeholder={user.tel_cli} defaultValue={user.tel_cli}/>
+					<input id="telefone" {...register("telefone")} type="tel" required placeholder={user.tel_cli} defaultValue={user.telefone}/>
 					
 					<label htmlFor="email">Email: </label>
-					<input id="email" {...register("email")} type="email" required maxLength={255} placeholder="Email *" value={user.email_cli} readOnly={true}/>
+					<input id="email" {...register("email")} type="email" required maxLength={255} placeholder="Email *" value={user.email} readOnly={true}/>
 					
 					<button id="editar" type="submit">Confirmar</button>
 			</form>

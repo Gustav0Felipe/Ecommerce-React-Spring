@@ -34,8 +34,10 @@ Login Admin em Router e Componente separado, feita a validação libera as segui
  * Opção de abrir os detalhes de um pedido da lista, para ver seus produtos e qual Cliente o fez.
 Ao abrir os detalhes do pedido existe a opção de finaliza-lo, a data final sera colocada como a data atual, e o status mudara para finalizado.
 
+### * Metodo de pagamento implementado através de chave Pix e QRCode.
+
+### * Validação de usuário feita agora a partir do SPRING SECURITY.
+
 Á fazer:
 
-Terminar a logica de negocio da compra e calculo de frete.
-
-Ajustar CSS para diferentes tamanhos de tela.
+Ajustar CSS.

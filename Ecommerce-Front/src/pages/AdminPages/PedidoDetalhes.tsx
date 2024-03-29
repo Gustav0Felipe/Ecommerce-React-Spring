@@ -1,25 +1,28 @@
 import { Footer } from "../../components/footer/footer";
 import Header from "../../components/header/header";
-import { Link, useParams } from "react-router-dom";
+import { Link, Navigate, useParams } from "react-router-dom";
 import { usePedidoDetails } from "../../hooks/usePedidoDetails";
-import axios from "axios";
-
-const API_URL = 'http://localhost:8080'
+import { useContext } from "react";
+import { UserContext } from "../../context/userContext";
+import { usePedidoDetailsMutate } from "../../hooks/usePedidoDetailsMutate";
 
 export function DetalhesDoPedido(){
+	const { user } = useContext(UserContext);
+
 	const { pedidoId } = useParams();
+	const { mutate } = usePedidoDetailsMutate();
+
 	const pedidoEProdutos = usePedidoDetails(pedidoId).data;
 	var pedidoDetails : any;
 	if(pedidoEProdutos != null){
 		pedidoDetails = pedidoEProdutos[Object.keys(pedidoEProdutos)[0]].pedidosProdutosId.num_ped
 	}
-	
-	const finalizarPedido = async () =>{
-		const response = await axios.put(API_URL + "/loja/admin/listar/pedido?pedido=" + pedidoId);
-		return response;
+	const finalizarPedido = () =>{
+		mutate(pedidoId)
 	}
     return(
     <>
+	{user.role != "ADMIN" && <Navigate to="/loja/login"></Navigate> }
     <Header></Header>
     <section id="section-principal">
 	<div>
@@ -36,7 +39,7 @@ export function DetalhesDoPedido(){
 				{pedidoDetails != null &&
 				<tr className="pedido">
 				<td>{pedidoDetails.num_ped}</td> 
-				<td>{pedidoDetails.cod_cli.nome_cli}</td>
+				<td>{pedidoDetails.cod_cli.nome}</td>
 				<td>{pedidoDetails.data_inicial} </td>
 				<td>{pedidoDetails.data_final} </td>
 				<td>{pedidoDetails.valor_total} </td>

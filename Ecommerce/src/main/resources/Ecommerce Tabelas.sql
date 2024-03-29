@@ -8,11 +8,13 @@ create table clientes(
     tel_cli varchar(20),
     email_cli varchar(100) unique not null,
     cpf_cli varchar(20),
-    ativo boolean,
+    verification_code varchar(255),
+    role varchar(30),
+    enabled boolean default(false),
+    pass_cli varchar(100),
     primary key(cod_cli)
 );
-ALTER TABLE `ecommerce`.`clientes` 
-ADD COLUMN `ativo` boolean NULL DEFAULT false AFTER `cpf_cli`;
+
 create table cadastro_cliente_loja(
 	cod_cli int,
     email_cli varchar(100) unique not null,
@@ -91,36 +93,17 @@ create table log_cad_cliente(
 );
 
 select * from log_cad_cliente;
-
-create table admin_sistema_loja (
-	cod_admin int auto_increment,
-    user_admin varchar(50) not null unique,
-    senha_admin varchar(30) not null,
-    
-    primary key (cod_admin)
-    
-);
-
-create table produtos_imagens(
-	id_prod int,
-    url_image varchar(255),
-	main_image boolean, 
-    constraint fk_prod_img_1 foreign key(id_prod) references produtos(id_prod)
-);
-insert admin_sistema_loja values(null, "admin", "123");
-
-select * from clientes;
-select * from cadastro_cliente_loja;
-call pd_deletar_cliente(6);
+select* from clientepd_finalizar_encomendas;
+select * from clientes where cod_cli > 8;
 select * from log_cad_cliente;
 select * from pedidos;
-insert into pedidos values(null, 1 , now(), now(), "pendente", 0);
-call pd_subir_encomenda_itens(4, 1, 3);
-
+##update pedidos set status_ped = "pendente" where num_ped >= 1;
+##insert into pedidos values(null, 1 , now(), now(), "pendente", 0);
+##call pd_subir_encomenda_itens(4, 1, 3);
+select * from produtos_imagens;
 select * from produtos order by nome_prod;
 select * from pedidos_produtos;
 select * from admin_sistema_loja;
 select year(data_inicial) from pedidos group by year(data_inicial) order by max(year(data_inicial)) asc;
 select * from pedidos where month(data_inicial) = ("0" + 3);
-insert into categorias values(1 , "Comida");
-insert into produtos values (3, "Danone", "Um danone de morango", 2.00, 2.50, 100, 1); 
+select * from produtos order by nome_prod desc;

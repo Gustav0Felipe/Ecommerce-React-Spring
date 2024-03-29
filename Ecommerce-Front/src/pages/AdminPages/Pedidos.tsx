@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { Footer } from "../../components/footer/footer";
 import Header from "../../components/header/header";
 import { usePedidosData } from "../../hooks/usePedidoDataList";
@@ -38,6 +38,7 @@ export function Pedidos(){
 
     return(
     <>
+    {window.sessionStorage.getItem("isAdmin") != "true" && <Navigate to="/loja/login"></Navigate> }
     <Header></Header>
 
     <section id="section-principal">

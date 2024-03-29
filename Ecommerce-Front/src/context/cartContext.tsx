@@ -66,7 +66,7 @@ export const CartProvider = ({ children } : any) => {
     return cartItems.reduce((total: number, item: { val_prod: number; quantity: number; }) => total + item.val_prod * item.quantity, 0);
   };
 
-  const updateOrder = () => {
+  const updateOrder = () =>  {
     var items : OrderProduct[] = cartItems.map((item: { id_prod: any; quantity: any; }) => {
       return {
        id_prod: item.id_prod, 
@@ -74,15 +74,24 @@ export const CartProvider = ({ children } : any) => {
       }
     });
     const pedido : Pedido = {
-      Cliente: user.cod_cli,
-      Produtos: items
+      clienteId: user.id_cliente,
+      nome: user.nome,
+      cpf: user.cpf,
+      produtos: items
     }
     if(pedido != null){
     const fetchData = async () => {
-      axios.post(API_URL + "/loja/cart/subir-pedido", pedido) //segundo parametro seriam headers
+      const response = await axios.post(API_URL + "/loja/cart/subir-pedido", pedido, {
+        headers:{
+          'Authorization': user.token
+        }
+      
+      }) 
       setCartItems([]);
+      return response;
       }
-    fetchData();
+    const response = fetchData();
+    return response;
     }
   }
 

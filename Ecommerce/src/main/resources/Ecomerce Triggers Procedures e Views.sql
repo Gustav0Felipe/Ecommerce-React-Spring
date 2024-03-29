@@ -74,7 +74,7 @@ begin
 end $$
 delimiter ;
 ## insert into produtos_imagens values (last_insert_id(), img, true);
-drop procedure pd_cadastro_produto;
+
 
 delimiter $$
 create procedure pd_subir_encomenda(in cliente int, out NumPedido int)
@@ -96,20 +96,19 @@ delimiter ;
 create procedure pd_finalizar_encomenda(in pedido int)
 	update pedidos set data_final = now(), status_ped = "finalizado" where num_ped = pedido;
 
-delimiter $$
-create procedure pd_is_admin(in usuario varchar(50), in senha varchar(30), out autorizar boolean)
-begin
-declare pass varchar(30);
-select senha_admin from admin_sistema_loja where user_admin = usuario and senha_admin = senha into pass;
-if(pass = senha)then
-	set autorizar = true;
-    else
-    set autorizar = false;
-end if ;
-end $$
-delimiter ;
-
-drop procedure pd_is_admin;
+##delimiter $$
+#create procedure pd_is_admin(in usuario varchar(50), in senha varchar(30), out autorizar boolean)
+#begin
+#declare pass varchar(30);
+#select senha_admin from admin_sistema_loja where user_admin = usuario and senha_admin = senha into pass;
+#if(pass = senha)then
+#	set autorizar = true;
+#    else
+#    set autorizar = false;
+#end if ;
+#end $$
+#delimiter ;
+##
 select user_admin from admin_sistema_loja where user_admin = "admin@hotmail.com" and senha_admin = "123";
 
 create procedure pd_emitir_relatorio(in Ano int, in mes int)
@@ -120,13 +119,13 @@ from pedidos
 join clientes on pedidos.cod_cli = clientes.cod_cli
 where year(data_inicial) = ano and month(data_inicial) =("0" + mes)
 ;
-drop procedure pd_emitir_relatorio;
-create procedure pd_user_cliente(in usuario varchar(50), in senha varchar(30))
-select clientes.cod_cli, nome_cli, tel_cli, clientes.email_cli, cpf_cli 
-from clientes 
-join cadastro_cliente_loja cad_cli on clientes.cod_cli = cad_cli.cod_cli 
-where cad_cli.email_cli = usuario and pass_cli = senha
-;
+
+
+##create procedure pd_user_cliente(in usuario varchar(100), in senha varchar(100)) 
+##select clientes.cod_cli, nome_cli, tel_cli, clientes.email_cli, cpf_cli 
+##from clientes
+##where email_cli = usuario and pass_cli = senha
+##;
 
 delimiter $$
 create procedure pd_cadastro_cliente(in nome varchar(255),in tel varchar(20), in email varchar(100), in cpf varchar(255), out idCliente int)
@@ -137,14 +136,6 @@ end $$
 delimiter ;
 
 
-
-delimiter $$ 
-create procedure pd_cadastro_cliente_sistema(in cliente int, in usuario varchar(50), in senha varchar(30))
-begin
-insert into cadastro_cliente_loja values(cliente, usuario, senha);
-end $$
-delimiter ;
-
 delimiter $$
 create procedure pd_atualiza_cliente(in idCliente int, in nome varchar(255), in telefone varchar(20))
 begin
@@ -154,23 +145,16 @@ end $$
 delimiter ;
 
 delimiter $$ 
-create procedure pd_autorizar_alterar_senha(in cliente int, in senha varchar(30), out autorizar boolean)
+create procedure pd_autorizar_alterar_senha(in cliente int, in senha varchar(100), out autorizar varchar(100))
 begin
-	declare pass varchar(30);
-	select pass_cli from cadastro_cliente_loja where cod_cli = cliente into pass;
-    if(pass = senha) then 
-		set autorizar = true;
-	else 
-		set autorizar = false;
-    end if;
+	select pass_cli from clientes where cod_cli = cliente into autorizar;
 end $$
 delimiter ;
 
 delimiter $$
-create procedure pd_atualiza_senha_cliente (in idCliente int, in senha varchar(30))
+create procedure pd_atualiza_senha_cliente (in idCliente int, in senha varchar(100))
 begin
-	update cadastro_cliente_loja set pass_cli = senha where cod_cli = idCliente;
-	select * from clientes where cod_cli = idCliente;
+	update clientes set pass_cli = senha where cod_cli = idCliente;
 end $$
 delimiter ;
 
@@ -202,12 +186,10 @@ where pedidos.num_ped = pedido;
 delimiter $$
 create procedure pd_deletar_cliente(in idCliente int)
 begin
-	delete from cadastro_cliente_loja where cod_cli = idCliente;
-	update clientes set nome_cli=nome_cli, tel_cli = "", email_cli = idCliente, cpf_cli = "" where cod_cli = idCliente;   
+	update clientes set enabled = false where cod_cli = idCliente;   
 end $$
 delimiter ;
 
-drop procedure pd_deletar_cliente;
 -- Teste
 insert into categorias values(null, "Comida");
 insert produtos values (1, "Biscoito", "É um biscoito de chocolate", 1.00, 1.50, 20, 1);

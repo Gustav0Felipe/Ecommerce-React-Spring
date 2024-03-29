@@ -1,6 +1,8 @@
 import { OrderProduct } from "./OrderProduct";
 
 export interface Pedido{
-    Cliente : number,
-    Produtos : OrderProduct[]
+    clienteId: number,
+    nome : string,
+    cpf: string,
+    produtos : OrderProduct[]
 }

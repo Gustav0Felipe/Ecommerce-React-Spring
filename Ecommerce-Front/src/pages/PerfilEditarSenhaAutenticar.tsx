@@ -1,4 +1,4 @@
-import { useContext } from "react"
+import { useContext, useState } from "react"
 import { UserContext } from "../context/userContext";
 import { useForm } from "react-hook-form";
 import axios from "axios";
@@ -14,13 +14,24 @@ export function AutenticarSenha(){
 
     console.log(window.sessionStorage.getItem("token"));
 
+    const [openMessage, setOpenMessage] = useState(false);
+
+    const handleOpenDesc = () =>{
+        setOpenMessage(prev => !prev);
+    }
+
     const passEdit = async (formValues : any) => {  
-        const response = await axios.post(API_URL + "/loja/perfil/autenticar-senha", formValues) //segundo parametro seriam headers
+        const response = await axios.post(API_URL + "/loja/perfil/autenticar-senha", formValues,{
+            headers: {
+                'Authorization': user.token
+            }
+        }) //segundo parametro seriam headers
         console.log(response);
         if(response.data.length == 0){
             alert("Senha Invalida.");
         } else{
             window.sessionStorage.setItem("token", response.data)
+            handleOpenDesc()
         }
     }
 
@@ -30,17 +41,22 @@ export function AutenticarSenha(){
     <section id="section-principal">
 		<div className="base">
 			<span id="accountIcon" className="material-symbols-outlined">account_circle</span>
-			<h1>Meus dados</h1>
 
+			<h1>Confirme a sua senha atual</h1>
+
+            {!openMessage &&
 			<form className="formDados" onSubmit={handleSubmit(passEdit)}>
-                <input id="idCliente" {...register("idCliente")} type="hidden" required  value={user.cod_cli}/>
-                <input id="email" {...register("email")} type="hidden" required  value={user.email_cli}/>
+                <input id="id" {...register("id")} type="hidden" required  defaultValue={user.id_cliente}/>
+                <input id="nome" {...register("nome")} type="hidden" required  defaultValue={user.nome}/>
+                <input id="email" {...register("email")} type="hidden" required  defaultValue={user.email}/>
 				<label htmlFor="senha">Sua senha atual: </label> 
-                <input id="senha" {...register("senha")} type="password" required maxLength={30}
-					placeholder="Sua Senha *" />
+                <input id="senha" {...register("senha")} type="password" required maxLength={100}
+					placeholder="Sua Senha *" autoComplete="on" />
 
 				<button id="editar" type="submit">Enviar</button>
 			</form>
+            }
+            {openMessage && <p>Enviamos um pedido de confirmação para seu Email!</p>}
 		</div>
 	</section>
     <Footer></Footer>

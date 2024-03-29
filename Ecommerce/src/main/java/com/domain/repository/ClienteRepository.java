@@ -4,14 +4,16 @@ package com.domain.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.query.Procedure;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import com.domain.model.Cliente;
 
 
 public interface ClienteRepository extends JpaRepository<Cliente, Integer> {
 
-	@Procedure
-	public Cliente pd_user_cliente(String email, String senha);
+	public UserDetails findByEmail(String email);
+	
+	public Cliente findByVerificationCode(String VerificationCode);
 	
 	@Procedure
 	public int pd_cadastro_cliente(String nome ,String telefone, String email, String cpf);
@@ -26,7 +28,7 @@ public interface ClienteRepository extends JpaRepository<Cliente, Integer> {
 	public Cliente pd_atualiza_cliente(int idCliente, String nome, String telefone);
 	
 	@Procedure
-	public Boolean pd_autorizar_alterar_senha(int idCliente, String senhaAtual);
+	public String pd_autorizar_alterar_senha(int idCliente, String senhaAtual);
 	
 	@Procedure
 	public Cliente pd_atualiza_senha_cliente(int idCliente, String novaSenha);

@@ -10,19 +10,22 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
+
 @Entity(name = "produtos")
 public class Produto {
 
 	
 
 	@Id
+	@Column(name="id_prod")
 	@GeneratedValue(strategy = GenerationType.IDENTITY )
-	private int id_prod;
+	private int id;
 	
 	@Column
 	@NotBlank
@@ -55,27 +58,14 @@ public class Produto {
 	@JoinColumn(name = "cod_cat")
 	private Categoria cod_cat;
 
-	
-	//quantidadePedido
-	/*
-	public Produtos(String nome, String desc, int qtd_estq, double custo,  double valor) {
-		this.nome = nome;
-		this.desc = desc;
-		this.custo = custo;
-		this.qtd_estq = qtd_estq;
-		this.valor = valor;
-	}
-	
-	public Produtos() {
-	}
-	*/
+
 	
 	public int getId_prod() {
-		return id_prod;
+		return id;
 	}
 
 	public void setId_prod(int id_prod) {
-		this.id_prod = id_prod;
+		this.id = id_prod;
 	}
 
 	public String getImage() {

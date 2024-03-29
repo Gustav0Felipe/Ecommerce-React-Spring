@@ -22,7 +22,11 @@ export function EditarSenha(){
     } 
     
     const passEdit = async (formValues : any) => {  
-        const response = await axios.put(API_URL + "/loja/perfil/editar-senha", formValues) //segundo parametro seriam headers
+        const response = await axios.put(API_URL + "/loja/perfil/editar-senha", formValues, {
+            headers: {
+                'Authorization': user.token
+            }
+        }) 
         userLogin(response.data);
         window.sessionStorage.removeItem("token");
         console.log(response);
@@ -37,10 +41,11 @@ export function EditarSenha(){
 			<span id="accountIcon" className="material-symbols-outlined">account_circle</span>
             {
             autorizar && <h1>Meus dados</h1> && <form className="formDados" onSubmit={handleSubmit(passEdit)}>
-                <input id="idCliente" {...register("idCliente")} type="hidden" required  value={user.cod_cli}/>
-                <input id="email" {...register("email")} type="hidden" required  value={user.email_cli}/>
+                <input id="id" {...register("id")} type="hidden" required  value={user.id_cliente}/>
+                <input id="nome" {...register("nome")} type="hidden" maxLength={255} required placeholder="Nome" value={user.nome}/>
+                <input id="email" {...register("email")} type="hidden" required  value={user.email}/>
 				<label htmlFor="senha">Nova senha: </label> 
-                <input id="senha" {...register("senha")} type="password" required maxLength={30}
+                <input id="senha" {...register("senha")} type="password" required maxLength={100}
 					placeholder="Nova Senha *" />
 
 				<button id="editar" type="submit">Enviar</button>

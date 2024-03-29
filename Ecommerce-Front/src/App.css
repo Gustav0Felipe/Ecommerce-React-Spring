@@ -114,7 +114,7 @@ nav > ul > li:last-child > a{
 .produto > a > img{
 	display: inline-block;
 	width: 20vw;
-}
+} 
 
 footer{
 	position: fixed;

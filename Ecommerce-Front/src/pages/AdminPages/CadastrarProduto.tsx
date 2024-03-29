@@ -3,6 +3,7 @@ import { Footer } from "../../components/footer/footer";
 import Header from "../../components/header/header";
 import { useProductMutate } from "../../hooks/useProductDataMutate";
 import { ProductDataDto } from "../../interface/ProductDataDto";
+import { Navigate } from "react-router-dom";
 
 
 const Input = ({id, name, label, inputValue, maxlength, type, placeholder, updateValue} : any) => {
@@ -15,6 +16,7 @@ const Input = ({id, name, label, inputValue, maxlength, type, placeholder, updat
 }
 
 export function CadastrarProduto(){
+
     const [nome, setNome] = useState("");
     const [desc, setDesc] = useState("");
     const [custo, setCusto] = useState(0);
@@ -26,7 +28,9 @@ export function CadastrarProduto(){
     const { mutate } = useProductMutate();
 
    
-    const submit = () => {
+    const submit = (event: { preventDefault: () => void; }) => {
+        event.preventDefault()
+        
         const productData : ProductDataDto = {
             imagem: imagem,
             nome: nome,
@@ -41,12 +45,13 @@ export function CadastrarProduto(){
 
     return (
     <>
+    {window.sessionStorage.getItem("isAdmin") != "true" && <Navigate to="/loja/login"></Navigate> }
     <Header></Header>
     <section id="section-principal">
         <div id="cadastro">
             <span id="createUserIcon" className="material-symbols-outlined">person_add</span>
             <h1>Novo produto: </h1>
-            <form className="formDados">
+            <form className="formDados" onSubmit={submit}>
                         
                 <Input label="Nome: " id="nome" name="nome" inputValue={nome} updateValue={setNome} type="text" maxlength={255} placeholder="Nome"/>
                 
@@ -61,7 +66,7 @@ export function CadastrarProduto(){
                 <Input label="Categoria: " id="categoria" name="categoria" inputValue={categoria} updateValue={setCategoria} type="number" maxlength={10} placeholder="Categoria *"/>
                 
                 <Input label="Imagem: " id="imagem" name="imagem" inputValue={imagem} updateValue={setImagem} type="text" maxlength={255} placeholder="Imagem *"/>
-            <button id="cadastrar" onClick={submit}>Enviar</button>
+            <button id="cadastrar" type="submit">Enviar</button>
             </form>
         </div>
     </section>
