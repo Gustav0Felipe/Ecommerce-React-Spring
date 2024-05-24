@@ -10,7 +10,7 @@ const API_URL = 'http://localhost:8080';
 export function Perfil(){
     const { user, userLogout } = useContext(UserContext);
 	
-	const deleteAccount = async () => {
+	const desableAccount = async () => {
 		const response = await axios.delete(API_URL + "/loja/perfil/deletar?idCliente=" + user.id_cliente, {
 			headers : {
 				'Authorization' : user.token
@@ -18,7 +18,7 @@ export function Perfil(){
 		})
 		userLogout();
 		console.log(response);
-		alert("Conta Excluida com Sucesso!, seus dados foram apagados.")
+		alert("Sua conta foi desativada, ao tentar logar novamente sera enviado um Link de reativação para seu E-mail.")
 		return response;
 	}
 	console.log(user)
@@ -46,7 +46,7 @@ export function Perfil(){
 			<Link to="/loja/perfil/editar"><button className="editButtons">EDITAR</button></Link> 
 			<Link to="/loja/perfil/autenticar-senha"><button className="editButtons">MUDAR SENHA</button></Link>
 			<button className="editButtons" onClick={userLogout}><span className="material-symbols-outlined" id="exitIcon">logout</span></button>
-			<button className="editButtons" onClick= {deleteAccount}>Excluir Conta</button>
+			<button className="editButtons" onClick= {desableAccount}>Desativar Conta</button>
 		</div>
 	    </section>
     <Footer></Footer>
