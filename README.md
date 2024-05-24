@@ -18,6 +18,8 @@ Subi no github os scripts do banco de dados que fiz.
 
 Ao finalizar a compra na pagina carrinho o pedido é subido no banco de dados, com calculo de estoque restante de cada produto e valor total do pedido feitos por trigger.
 
+Ao cadastrar uma conta para poder logar é necessario clicar no link de confirmação mandado ao email.
+
 O cliente ao logar e ir no perfil pode alterar seus dados, apenas é permitido alterar nome, telefone e senha.
 
 Ao querer alterar senha necessario fornecer a senha atual, que sera validada para checar se corresponde a que foi cadastrada no banco de dados.
