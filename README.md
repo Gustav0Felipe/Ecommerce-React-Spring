@@ -22,6 +22,8 @@ Ao cadastrar uma conta para poder logar é necessario clicar no link de confirma
 
 O cliente ao logar e ir no perfil pode alterar seus dados, apenas é permitido alterar nome, telefone e senha.
 
+O cliente logado pode clicar em excluir conta, que ira desativar sua conta, caso tente logar em uma conta desativada é enviado ao email um link para reativação.
+
 Ao querer alterar senha necessario fornecer a senha atual, que sera validada para checar se corresponde a que foi cadastrada no banco de dados.
 
 Após isto o sistema pega as credenciais da empresa e as usa para mandar ao cliente um email com o link para alteração de senha para confirmar que ele que solicitou.
