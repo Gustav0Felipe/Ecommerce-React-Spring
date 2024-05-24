@@ -18,7 +18,7 @@ export default function Cart () {
       {
           cartItems.length > 0 ? (
       <p>Total: {getCartTotal()}</p> ) : (
-        <h1>Your cart is empty</h1>
+        <h3>Você não tem itens no Carrinho.</h3>
       )}
     </div>
       <div>

@@ -26,6 +26,24 @@ public class ClienteService {
 	public Boolean clienteJaCadastrado(String email, String cpf) {
 		return clienteRepository.pd_user_cliente_alreadyExists(email, cpf);
 	}
+	
+	public Boolean clienteExisteDesabilitado(String email) {
+
+		Boolean clienteDesativado = clienteRepository.pd_user_cliente_inactive(email);
+
+		System.out.println("Tentando Reativar Cliente..." + clienteDesativado);
+		if(clienteDesativado) {
+			reativarCliente(email);
+			return true;
+		};
+		return false;
+	}
+	
+	public void reativarCliente(String email) {
+		Cliente cliente = (Cliente) clienteRepository.findByEmail(email);
+		System.out.println("Enviando notif, Code: " + cliente.getVerificationCode());
+		mailService.sendReactivationEmail(cliente);
+	}
 
 	public DadosClienteDto cadastrarCliente(Cliente cliente) {
 		
@@ -51,7 +69,8 @@ public class ClienteService {
 					cliente.getTelefone(),
 					cliente.getCpf(),
 					null,
-					cliente.getRole()
+					cliente.getRole(),
+					null
 					);
 			
 			mailService.sendVerificationEmail(clienteSalvo);
@@ -100,6 +119,7 @@ public class ClienteService {
 	}
 
 	public void deletarCliente(String idCliente) {
-		clienteRepository.pd_deletar_cliente(Integer.parseInt(idCliente));	
+		String verificationCode = Utilitarios.gerarStringAlphanumerica(64);
+		clienteRepository.pd_deletar_cliente(Integer.parseInt(idCliente), verificationCode);	
 	}
 }

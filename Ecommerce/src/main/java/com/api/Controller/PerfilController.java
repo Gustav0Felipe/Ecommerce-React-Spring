@@ -1,7 +1,6 @@
 package com.api.Controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -48,7 +47,7 @@ public class PerfilController {
 		return clienteService.atualizarSenhaCliente(dadosCliente);
 	}
 	
-	@PreAuthorize("hasRole('ADMIN')") 
+ 
 	@CrossOrigin(origins = "*", allowedHeaders = "*")
 	@Transactional
 	@PutMapping("/editar")
@@ -56,12 +55,13 @@ public class PerfilController {
 		
 		Cliente cliente = clienteService.atualizarCliente(dadosCliente);
 		return new DadosClienteDto(cliente.getCod_cli(), cliente.getNome(), cliente.getEmail(), 
-				cliente.getPassword(), cliente.getTelefone(), cliente.getCpf(), dadosCliente.token(), cliente.getRole());
+				cliente.getPassword(), cliente.getTelefone(), cliente.getCpf(), dadosCliente.token(), cliente.getRole(), null);
 	} 
 	
 	@CrossOrigin(origins = "*", allowedHeaders = "*")
 	@DeleteMapping("/deletar")
 	public void deletarCliente(@RequestParam String idCliente) {
+		System.out.println("Deletando..." + idCliente);
 		clienteService.deletarCliente(idCliente);
 	}
 	

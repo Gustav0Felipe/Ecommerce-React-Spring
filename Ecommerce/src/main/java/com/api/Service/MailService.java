@@ -48,7 +48,7 @@ public class MailService {
 			MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "utf-8");
 			String htmlMsg = 
 				("<h1>Olá [[NOME]], aqui esta o link para confirmar seu cadastro: </h1>"
-				+ String.format("<a href='%s/login/auth=%s'>Clique Aqui</a>", verifyURL, cliente.getVerificationCode())
+				+ String.format("<a href='%s/cadastro/verificar/auth=%s'>Clique Aqui</a>", verifyURL, cliente.getVerificationCode())
 				).replace("[[NOME]]", cliente.getNome());
 			
 			helper.setText(htmlMsg, true);
@@ -61,5 +61,25 @@ public class MailService {
 				System.out.println(e.getMessage());
 	     	}
 		
+	}
+
+	public void sendReactivationEmail(Cliente cliente) {
+		try {
+			MimeMessage mimeMessage = mailSender.createMimeMessage();
+			MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "utf-8");
+			String htmlMsg = 
+				("<h1>Olá [[NOME]], tentaram reativar sua conta no site Ecommerce, se a tentativa foi feita por você acesse: </h1>"
+				+ String.format("<a href='%s/cadastro/verificar/%s'>Clique Aqui</a>", verifyURL, cliente.getVerificationCode())
+				).replace("[[NOME]]", cliente.getNome());
+			
+			helper.setText(htmlMsg, true);
+			helper.setFrom(remetente);
+			helper.setTo(cliente.getEmail());
+			helper.setSubject("Confirmação de registro.");
+			mailSender.send(mimeMessage);
+	     	}catch(Exception e) {
+				System.out.println(e.getCause());
+				System.out.println(e.getMessage());
+	     	}
 	}
 }

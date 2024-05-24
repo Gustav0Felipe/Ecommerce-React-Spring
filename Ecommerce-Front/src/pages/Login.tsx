@@ -13,17 +13,24 @@ export function Login(){
     const { user, userLogin } = useContext(UserContext);
     const { register, handleSubmit } = useForm();
     const [redirectAdminPage, setRedirectAdminPage] = useState(false);
+    const [reactivation, handleReactivation] = useState(false);
 
     const loginValidate = async (formValues : any) => {  
             const response = await axios.post(API_URL + "/loja/login", formValues) //segundo parametro seriam headers
-            if((response.data.role).toUpperCase() == "ADMIN"  ){
-                window.sessionStorage.setItem("isAdmin", "true");
-                setRedirectAdminPage (true);
-            }
+            console.log(response)
             if(response.data.length == 0){
                 alert("Email ou senha Inválidos.");
+                if((response.data.role).toUpperCase() == "ADMIN"  ){
+                    window.sessionStorage.setItem("isAdmin", "true");
+                    setRedirectAdminPage (true);
+                }
             } else{
-                userLogin(response.data);
+                if(response.data.enabled == false){
+                    handleReactivation(true);
+                }
+                else{
+                    userLogin(response.data);
+                }
             }
     }
 
@@ -44,6 +51,8 @@ export function Login(){
                     <input id="senha" {...register("senha")} type="password" minLength={8} required placeholder="Senha *" autoComplete="on" />
                     <button id="cadastrar" type="submit">Enviar</button>
                 </form>
+
+                {reactivation && <p>Essa conta esta desativada. Enviamos um Email para você reativar a sua conta.</p>}
             </div>
         </section>
         <Footer></Footer>

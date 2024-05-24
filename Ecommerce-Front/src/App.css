@@ -97,7 +97,7 @@ nav > ul > li:last-child > a{
 	font-size: 1.5em;
 }
 #section-principal > h1{
-	font-size: 2em;
+	font-size: 1.2em;
 	text-align: center;
 }
 .produtos{
@@ -216,6 +216,14 @@ div#detalhes > form {
 	width: 90%px;
 	max-width: 300px;
 	margin: auto;
+}
+
+div.pagamento {
+	margin: 50px auto;
+	width: 90%;
+	max-width: 900px;
+	border: 1px solid black;
+	border-radius: 5px;
 }
 
 

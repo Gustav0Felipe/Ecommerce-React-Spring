@@ -25,6 +25,9 @@ public interface ClienteRepository extends JpaRepository<Cliente, Integer> {
 	public Boolean pd_user_cliente_alreadyExists(String usuario, String cpf);
 	
 	@Procedure
+	public Boolean pd_user_cliente_inactive(String usuario);
+	
+	@Procedure
 	public Cliente pd_atualiza_cliente(int idCliente, String nome, String telefone);
 	
 	@Procedure
@@ -34,5 +37,5 @@ public interface ClienteRepository extends JpaRepository<Cliente, Integer> {
 	public Cliente pd_atualiza_senha_cliente(int idCliente, String novaSenha);
 	
 	@Procedure
-	public void pd_deletar_cliente(int idCliente);
+	public void pd_deletar_cliente(int idCliente, String verificationCode);
 }

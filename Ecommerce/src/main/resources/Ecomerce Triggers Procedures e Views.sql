@@ -159,7 +159,7 @@ end $$
 delimiter ;
 
 delimiter $$
-create procedure pd_user_cliente_alreadyExists(in cpf varchar(20))
+create procedure pd_user_cliente_alreadyExists(in usuario varchar(100), in cpf varchar(20), out alreadyExists boolean)
 begin 
 declare emailCheck varchar(100);
 declare cpfCheck varchar(255);
@@ -173,6 +173,18 @@ else
 end $$
 delimiter ;
 
+delimiter $$
+create procedure pd_user_cliente_inactive(in usuario varchar(100), out alreadyExists boolean)
+begin 
+declare clientExistsInactive varchar(100);
+select nome_cli from clientes where email_cli = usuario and enabled = 0 into clientExistsInactive;
+if(clientExistsInactive is not null) then 
+	set alreadyExists = true;
+else 
+	set alreadyExists = false;
+    end if;
+end $$
+delimiter ;
 
 create procedure pd_emitir_pedido(in pedido int)
 select 
@@ -184,9 +196,9 @@ join produtos on pedidos_produtos.id_prod = produtos.id_prod
 where pedidos.num_ped = pedido;
 
 delimiter $$
-create procedure pd_deletar_cliente(in idCliente int)
+create procedure pd_deletar_cliente(in idCliente int, in verificationCode varchar(255))
 begin
-	update clientes set enabled = false where cod_cli = idCliente;   
+	update clientes set enabled = false, verification_code = verificationCode where cod_cli = idCliente;   
 end $$
 delimiter ;
 

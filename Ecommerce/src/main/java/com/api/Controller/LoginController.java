@@ -35,21 +35,30 @@ public class LoginController {
 	@Transactional
 	@PostMapping
 	public ResponseEntity<DadosClienteDto> validarLogin(@RequestBody LoginDto clienteData) {
+		
+		DadosClienteDto clienteResponse = null;
+		
+		Boolean clienteDesabilitado = clienteService.clienteExisteDesabilitado(clienteData.email());
+		
+		if(clienteDesabilitado) {
+			clienteResponse = new DadosClienteDto(0, null, null, null, null, null, null, null, false);
+			return ResponseEntity.ok(clienteResponse);
+		}
 		var usernamePassword = new UsernamePasswordAuthenticationToken(clienteData.email(), clienteData.senha());
 		
 		var auth = authenticationManager.authenticate(usernamePassword);
 		
 		Cliente cliente = (Cliente) auth.getPrincipal();
 		
-		DadosClienteDto clienteResponse = null;
+		
+			
 		if(cliente != null) {
 			var token = tokenService.generateToken(cliente);
 			clienteResponse = new DadosClienteDto(cliente.getCod_cli(), cliente.getNome(), cliente.getEmail(), 
-				cliente.getPassword(), cliente.getTelefone(), cliente.getCpf(), token, cliente.getRole());
+				cliente.getPassword(), cliente.getTelefone(), cliente.getCpf(), token, cliente.getRole(), true);
 		}
-		
+	
 		return ResponseEntity.ok(clienteResponse);
-		
 	}
 	
 }

@@ -15,15 +15,6 @@ create table clientes(
     primary key(cod_cli)
 );
 
-create table cadastro_cliente_loja(
-	cod_cli int,
-    email_cli varchar(100) unique not null,
-    pass_cli varchar(30) not null,
-    
-    constraint pk_cadcli_1 primary key(cod_cli),
-    constraint fk_cadcli_1 foreign key(email_cli) references clientes (email_cli)
-);
-
 
 create table pedidos(
 		num_ped int not null auto_increment,
@@ -93,7 +84,7 @@ create table log_cad_cliente(
 );
 
 select * from log_cad_cliente;
-select* from clientepd_finalizar_encomendas;
+select* from clientes;
 select * from clientes where cod_cli > 8;
 select * from log_cad_cliente;
 select * from pedidos;
@@ -102,8 +93,14 @@ select * from pedidos;
 ##call pd_subir_encomenda_itens(4, 1, 3);
 select * from produtos_imagens;
 select * from produtos order by nome_prod;
-select * from pedidos_produtos;
+select pedidos.num_ped "Pedido",nome_prod "Produto", nome_cli "Cliente", valor_total "Total" from pedidos_produtos 
+join produtos on produtos.id_prod = pedidos_produtos.id_prod 
+join pedidos on pedidos.num_ped = pedidos_produtos.num_ped
+join clientes on pedidos.cod_cli = clientes.cod_cli where nome_cli = "Usuario De Teste";
+
 select * from admin_sistema_loja;
 select year(data_inicial) from pedidos group by year(data_inicial) order by max(year(data_inicial)) asc;
-select * from pedidos where month(data_inicial) = ("0" + 3);
 select * from produtos order by nome_prod desc;
+
+
+

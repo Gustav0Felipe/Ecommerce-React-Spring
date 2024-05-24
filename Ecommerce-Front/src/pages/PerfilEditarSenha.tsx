@@ -12,7 +12,8 @@ export function EditarSenha(){
     const { user, userLogin } = useContext(UserContext);
     const { register, handleSubmit } = useForm();
     var { auth } = useParams();
-    
+    console.log(auth)
+    console.log(window.sessionStorage.getItem("token"))
     var autorizar = false;
     if(auth == "auth=" + window.sessionStorage.getItem("token")){
         autorizar = true;

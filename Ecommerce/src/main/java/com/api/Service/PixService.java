@@ -72,7 +72,7 @@ public class PixService {
 			valor = valor.setScale(2, RoundingMode.HALF_UP);
 			
 	        body.put("calendario", new JSONObject().put("expiracao", 3600));
-	        body.put("devedor", new JSONObject().put("cpf", pedido.cpf()).put("nome", pedido.nome()));
+	        body.put("devedor", new JSONObject().put("cpf", pedido.cpf().replace(".","").replace("-", "")).put("nome", pedido.nome()));
 	        body.put("valor", new JSONObject().put("original", valor.toString()));
 	        body.put("chave", chave);
 	        //body.put("notification_url", "");
@@ -127,7 +127,6 @@ public class PixService {
             System.out.println(e.getMessage());
         }
         return null;
-
     }
 
 

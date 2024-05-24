@@ -29,23 +29,19 @@ public class CadastroController {
 	@CrossOrigin(origins = "*", allowedHeaders = "*")
 	@PostMapping
 	public ResponseEntity<DadosClienteDto> cadastrarCliente(@RequestBody @Valid CadastroClienteDto cadastro) {
-		System.out.println(cadastro);
 		Cliente cliente = cadastro.toModel();
-		
 		
 		DadosClienteDto clienteSalvo =  clienteService.cadastrarCliente(cliente);
 		return ResponseEntity.ok().body(clienteSalvo);
-		
 	}
 	
 	@CrossOrigin(origins = "*", allowedHeaders = "*")
 	@GetMapping("/verificar")
-	public String verificarUsuario(@RequestParam String code) {
-		System.out.println("Verificando");
+	public Boolean verificarUsuario(@RequestParam String code) {
 		if(clienteService.verify(code)) {
-			return  "verify_success";
+			return true;
 		} else {
-			return "verify_fail";
+			return false;
 		}
 	}
 	

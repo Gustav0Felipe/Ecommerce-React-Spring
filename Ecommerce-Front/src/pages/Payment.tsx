@@ -22,10 +22,12 @@ export function Payment(){
         <>
         <Header></Header>
         <section id="section-principal">
+            <div className="pagamento">
             <h1>Pix : </h1>
             <img src={pix?.QRCode}></img>
-            <p>{pix?.valor.original}</p>
-            <p>{pix?.Chave}</p>
+            <p>Preço: {pix?.valor.original}</p>
+            <p>Chave: {pix?.Chave}</p>
+            </div>
         </section>
         <Footer></Footer>
         </>
