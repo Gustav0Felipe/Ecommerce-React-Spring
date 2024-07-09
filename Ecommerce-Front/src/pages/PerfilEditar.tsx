@@ -19,8 +19,6 @@ export function EditarPerfil(){
 			  });
             console.log(response);
 			
-			//TESTAR ISSO AQUI, TALVEZ GUARDAREI TOKEN NO CONTEXTO? 
-			//PROVAVELMENTE IREI GERAR UM NOVO TOKEN NO CONTROLLER E PEGAR NO RESPONSE AQUI.
 			userLogin(response.data); 
 			  console.log(user)
             return response;

@@ -461,6 +461,30 @@ tr.pedido > td, th {
 	color: black;
 }
 
+/*Pagamento*/
+#copiar {
+	padding: 0px;
+	margin: auto;
+}
+
+.pagamento {
+	text-align: center;
+}
+
+.pagamento > ol > li{
+	display: flex;
+	width: 90%;
+	max-width: 450px;
+	padding: 7PX;
+	margin: 5px auto;
+	align-content: center;
+	border: 1px solid rgba(195, 195, 195, 0.39);
+	background-color: rgb(233, 233, 233);
+
+	text-align: left;
+	cursor: pointer;
+	list-style-type: none;
+}
 
 /*Admin*/
 #section-principal-admin{

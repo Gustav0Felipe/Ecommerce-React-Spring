@@ -3,11 +3,13 @@ import { CartContext } from '../context/cartContext'
 import { Footer } from '../components/footer/footer'
 import Header from '../components/header/header'
 import { Link } from 'react-router-dom'
+import { UserContext } from '../context/userContext'
 
 export default function Cart () {
 
   const { cartItems, addToCart, removeFromCart, deleteFromCart, clearCart, getCartTotal } = useContext(CartContext)
-
+  const { user } = useContext(UserContext);
+  
   return (
     <>    
     <Header></Header>
@@ -59,7 +61,15 @@ export default function Cart () {
       </div>
 
       <div id="finalizarDiv">
-        <Link to="/loja/cart/payment"><span className='material-symbols-outlined'>shopping_cart</span> FINALIZAR PEDIDO</Link>
+        {
+        cartItems.length == 0 ||
+
+        user.length == 0 && 
+        <Link to="/loja/login" ><span className='material-symbols-outlined'>shopping_cart</span> FINALIZAR PEDIDO</Link>
+        ||
+
+        <Link to="/loja/cart/payment" ><span className='material-symbols-outlined'>shopping_cart</span> FINALIZAR PEDIDO</Link> 
+        }
       </div>
       </section>
       <Footer></Footer>

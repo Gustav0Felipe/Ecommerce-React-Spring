@@ -23,7 +23,7 @@ select produtos.id_prod "Codigo_do_Produto", nome_prod "Produto", num_ped "Pedid
 from pedidos_produtos
 join produtos on pedidos_produtos.id_prod = produtos.id_prod
 ;
-
+    
 -- Triggers 
 
 delimiter $$
@@ -51,16 +51,6 @@ end
 $$
 delimiter ;
 
-delimiter $$
-create trigger tr_cadastro_cliente after insert on clientes
-for each row
-begin
-insert into log_cad_cliente 
-(cod_cliente_log_cad, data_cadastro_log_cad, new_email_log_cad, new_tel_log_cad, old_cpf_log_cad, tipo_movimentacao)
-values(new.cod_cli, now(), new.email_cli, new.tel_cli, new.cpf_cli, "insert");
-end
-$$
-delimiter ;
 -- Procedures
 
 delimiter $$
@@ -69,6 +59,7 @@ begin
 	insert into produtos values (null, nome, descricao, custo, valor, estoque, categoria, img);
 end $$
 delimiter ;
+
 
 delimiter $$
 create procedure pd_subir_encomenda(in cliente int, out NumPedido int)
@@ -176,8 +167,10 @@ begin
 end $$
 delimiter ;
 
+
+
 -- Teste
 ##insert into categorias values(null, "Comida");
-##insert produtos values (1, "Biscoito", "É um biscoito de chocolate", 1.00, 1.50, 20, 1);
+##insert produtos values (1, "Biscoito", "É um biscoito de chocolate", 1.00, 1.50, 20, 1, "");
 ##insert produtos values (2, "Bolacha", "É uma bolacha de agua e sal", 3.00, 4.50, 50, 1);
-
+##select * from produtos;

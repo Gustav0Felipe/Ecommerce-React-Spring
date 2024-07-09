@@ -8,9 +8,13 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+@NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
 @Table(name = "categorias")
@@ -24,22 +28,4 @@ public class Categoria {
 	@NotBlank
 	@Size(max = 75)
 	private String nome_cat;
-
-	public int getCod_cat() {
-		return cod_cat;
-	}
-
-	public void setCod_cat(int cod_cat) {
-		this.cod_cat = cod_cat;
-	}
-
-	public String getNome_cat() {
-		return nome_cat;
-	}
-
-	public void setNome_cat(String nome_cat) {
-		this.nome_cat = nome_cat;
-	}
-
-	
 }

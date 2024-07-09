@@ -1,7 +1,6 @@
 package com.api.Service;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -35,7 +34,7 @@ public class PixService {
 
         JSONObject options = configuringJsonObject();
 
-        try {
+        try {  
             EfiPay efi = new EfiPay(options);
             JSONObject response = efi.call("pixCreateEvp", new HashMap<String,String>(), new JSONObject());
             return response;
@@ -66,11 +65,11 @@ public class PixService {
 			}else {
 				chave = pixCreateEVP().toString();
 			}
-			System.out.println("Chave : " + chave);
+			System.out.println("Valor Total : " + valorTotal);
 			
 			BigDecimal valor = BigDecimal.valueOf(valorTotal);
-			valor = valor.setScale(2, RoundingMode.HALF_UP);
-			
+			valor = valor.setScale(2);
+			System.out.println("Valor : " + valor);
 	        body.put("calendario", new JSONObject().put("expiracao", 3600));
 	        body.put("devedor", new JSONObject().put("cpf", pedido.cpf().replace(".","").replace("-", "")).put("nome", pedido.nome()));
 	        body.put("valor", new JSONObject().put("original", valor.toString()));
@@ -110,15 +109,11 @@ public class PixService {
 
         HashMap<String, String> params = new HashMap<String, String>();
         params.put("id", id);
-        System.out.println("Gerando QRCODE...");
+      
         try {
             EfiPay efi= new EfiPay(options);
             Map<String, Object> response = efi.call("pixGenerateQRCode", params, new HashMap<String, Object>());
-
-            System.out.println(response);
-            
             return response.get("imagemQrcode").toString();
-            
         }catch (EfiPayException e){ 
             System.out.println(e.getError());
             System.out.println(e.getErrorDescription());

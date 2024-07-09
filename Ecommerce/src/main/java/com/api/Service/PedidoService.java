@@ -25,7 +25,7 @@ public class PedidoService {
 		for(CartItemDto produto : pedido.produtos()) {
 		
 			Optional<Produto> item = produtoRepository.findById(produto.id_prod());
-			valorTotal = (item.get().getVal_prod() + produto.quantity()); //a quantidade pego do front end, o valor diretamente do banco de dados.
+			valorTotal = valorTotal + (item.get().getVal_prod() * produto.quantity()); //a quantidade pego do front end, o valor diretamente do banco de dados.
 		
 		}
 		return valorTotal;

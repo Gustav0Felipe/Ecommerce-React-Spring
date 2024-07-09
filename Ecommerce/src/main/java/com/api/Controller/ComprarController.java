@@ -40,10 +40,10 @@ public class ComprarController  {
 	@CrossOrigin(origins = "*", allowedHeaders = "*")
 	@PostMapping("/cart/subir-pedido")
 	public ResponseEntity<String> finalizarPedido(@RequestBody PedidoDto pedido){
-		System.out.println("Pedido Dto: " + pedido);
+		
 		Double valorTotal = pedidoService.calcularValorTotal(pedido);
 		JSONObject response = pixService.pixCreateCharge(pedido , valorTotal);
-		System.out.println("Resposta : " + response);
+		System.out.println("Valor Total : " + valorTotal);
 		
 		if(response == null) {
 			response = new JSONObject();

@@ -39,7 +39,7 @@ public class AdminService {
 	public List<PedidoProduto> detalharPedido(int pedido){
 		return pedidoProdutoRepository.findAllByPedido(pedido);
 	}
-	public void finalizarPedido(int pedido){
+  	public void finalizarPedido(int pedido){
 		pedidoProdutoRepository.pd_finalizar_encomenda(pedido);
 		
 	}

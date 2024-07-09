@@ -79,7 +79,7 @@ export const CartProvider = ({ children } : any) => {
       cpf: user.cpf,
       produtos: items
     }
-    if(pedido != null){
+    if(pedido != null && cartItems.length > 0 && user){
     const fetchData = async () => {
       const response = await axios.post(API_URL + "/loja/cart/subir-pedido", pedido, {
         headers:{

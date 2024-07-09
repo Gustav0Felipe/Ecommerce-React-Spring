@@ -62,6 +62,7 @@ public class ClienteService {
 			Cliente clienteSalvo = clienteRepository.save(cliente);
 			
 			DadosClienteDto saidaCliente = new DadosClienteDto(
+					//TODO aqui seria cliente salvo não?
 					cliente.getCod_cli(),
 					cliente.getNome(),
 					cliente.getEmail(),
@@ -72,7 +73,6 @@ public class ClienteService {
 					cliente.getRole(),
 					null
 					);
-			
 			mailService.sendVerificationEmail(clienteSalvo);
 			
 			return saidaCliente;

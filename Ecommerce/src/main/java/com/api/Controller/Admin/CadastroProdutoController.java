@@ -22,7 +22,6 @@ public class CadastroProdutoController {
 	@CrossOrigin(origins="*", allowedHeaders="*")
 	@PostMapping("/cadastrar-produto")
 	public HttpStatus cadastrarProduto(@RequestBody ProdutoDto produto) {
-		System.out.println("Chegou no cadastro de produto.");
 		adminService.cadastrarProduto(produto);
 		
 		return HttpStatus.OK;
