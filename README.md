@@ -42,6 +42,8 @@ Ao abrir os detalhes do pedido existe a opção de finaliza-lo, a data final ser
 
 ### * Validação de usuário feita agora a partir do SPRING SECURITY.
 
-Á fazer:
+## Videos do Projeto:
 
-Ajustar CSS.
+Caso de uso de fazer um Pedido, retornando o QRCode e a Chave para pagamento em PIX pelo banco EFI.
+[![Thumbnail do Video "Ecommerce Java Spring e React - Compra com PIX usando EFI"](https://img.youtube.com/vi/0bei6IDxqJU/0.jpg)](https://www.youtube.com/watch?v=0bei6IDxqJU)
+
