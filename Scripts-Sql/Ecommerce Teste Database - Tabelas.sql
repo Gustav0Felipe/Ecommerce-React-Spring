@@ -67,6 +67,18 @@ create table pedidos_produtos(
     constraint fk_pedprod_2 foreign key(num_ped) references pedidos(num_ped)
 );
 
+create table credenciamento_empresa(
+	id_empresa int not null auto_increment,
+	client_id varchar(255),
+    client_secret varchar(255),
+    jwt_secret varchar(255),
+    mail_password varchar(255),
+    mail_username varchar(255),
+	cert_name varchar(255),
+    
+    constraint pk_credenciamento_empresa primary key (id_empresa)
+);
+
 insert into categorias values(1, "comida");
 
 

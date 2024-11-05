@@ -10,7 +10,7 @@ const API_URL = 'http://localhost:8080';
 export function Perfil(){
     const { user, userLogout } = useContext(UserContext);
 	
-	const desableAccount = async () => {
+	const disableAccount = async () => {
 		const response = await axios.delete(API_URL + "/loja/perfil/deletar?idCliente=" + user.id_cliente, {
 			headers : {
 				'Authorization' : user.token
@@ -21,7 +21,6 @@ export function Perfil(){
 		alert("Sua conta foi desativada, ao tentar logar novamente sera enviado um Link de reativação para seu E-mail.")
 		return response;
 	}
-	console.log(user)
     return(
     <>
 	{(user == null || !user.id_cliente) && <Navigate to="/loja/login"></Navigate>}
@@ -36,17 +35,17 @@ export function Perfil(){
 				<li className="perfilDados">Nome:</li>
 				<li>{user.nome}</li>
 				<li className="perfilDados">Email:</li>
-				<li>Gustavo.teste55@hotmail.com</li>
+				<li>{user.email}</li>
 				<li className="perfilDados">Telefone:</li>
 				<li>{user.telefone}</li>
 				<li className="perfilDados">Cpf:</li>
-				<li>433.422.144-59</li>
+				<li>{user.cpf}</li>
 			</ol>
 			<br/> 
 			<Link to="/loja/perfil/editar"><button className="editButtons">EDITAR</button></Link> 
 			<Link to="/loja/perfil/autenticar-senha"><button className="editButtons">MUDAR SENHA</button></Link>
 			<button className="editButtons" onClick={userLogout}><span className="material-symbols-outlined" id="exitIcon">logout</span></button>
-			<button className="editButtons" onClick= {desableAccount}>Desativar Conta</button>
+			<button className="editButtons" onClick= {disableAccount}>Desativar Conta</button>
 		</div>
 	    </section>
     <Footer></Footer>
