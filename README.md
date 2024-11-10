@@ -55,7 +55,7 @@ Um site Ecommerce com o front-end feito em React e TypeScript e o back-end feito
 
 
 ## Tecnologias utilizadas <a name="id02"></a>
-<div style="display: inline_block">
+<div align='center' style="display: inline_block">
   <img align="center" alt="Java" src="https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white"/>
   <img align="center" alt="Spring" src="https://img.shields.io/badge/Spring-6DB33F?style=for-the-badge&logo=spring&logoColor=white">
   <img align="center" alt="React" src="https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB"/>
@@ -68,7 +68,7 @@ Um site Ecommerce com o front-end feito em React e TypeScript e o back-end feito
 ## Ambiente de codificação <a name="id03"></a>
 
 <div  align='center'> 
-
+  
 ![eclipse](https://img.shields.io/badge/Eclipse-2C2255?style=for-the-badge&logo=eclipse&logoColor=white)
 ![](https://img.shields.io/badge/VSCode-0D1117?style=for-the-badge&logo=visual%20studio%20code&logoColor=blue)
 ![node](https://img.shields.io/badge/Nodejs-0D1117?style=for-the-badge&logo=node.js&logoColor=green)
